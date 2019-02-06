@@ -1,4 +1,4 @@
-package com.example.amanullah.myapplication62;
+package com.example.amanullah.myapplication63;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -67,9 +67,9 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final Player player = playerListFiltered.get(position);
         holder.name.setText(player.getName());
-        holder.point.setText(player.getPoint());
+        //holder.point.setText(player.getPoint());
         holder.price.setText(player.getPrice());
-        holder.details.setText(player.getDetails());
+        //holder.details.setText(player.getDetails());
 
         Glide.with(context)
                 .load(R.drawable.i5)
@@ -99,9 +99,11 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
 
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
+                        /*
                         if (row.getName().toLowerCase().contains(charString.toLowerCase()) || row.getDetails().contains(charSequence)) {
                             filteredList.add(row);
                         }
+                        */
                     }
 
                     playerListFiltered = filteredList;

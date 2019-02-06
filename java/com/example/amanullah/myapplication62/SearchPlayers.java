@@ -1,4 +1,4 @@
-package com.example.amanullah.myapplication62;
+package com.example.amanullah.myapplication63;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -12,14 +12,18 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -33,7 +37,9 @@ public class SearchPlayers extends AppCompatActivity implements PlayerAdapter.Pl
     private List<Player> playerList;
     private PlayerAdapter mAdapter;
     private SearchView searchView;
-    DatabaseReference databaseReference, parentRef, pushRef;
+    private Player player;
+
+    DatabaseReference playerReference, parentRef, pushRef,userReference;
 
     String[] names = {
             "M.Asifur Rahman",
@@ -69,25 +75,10 @@ public class SearchPlayers extends AppCompatActivity implements PlayerAdapter.Pl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_players);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
-        // toolbar fancy stuff
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setTitle(R.string.toolbar_title);
-        getSupportActionBar().setTitle((Html.fromHtml(
-                "<font color=\"#FFFFFF\">"
-                        + getString(R.string.toolbar_title)
-                //+ "</font>"
-        )));
-
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         playerList = new ArrayList<>();
-        mAdapter = new PlayerAdapter(getBaseContext(), playerList, this);
-
-        // white background notification bar
-        //whiteNotificationBar(recyclerView);
-
+        mAdapter = new PlayerAdapter(SearchPlayers.this, playerList, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -111,27 +102,32 @@ public class SearchPlayers extends AppCompatActivity implements PlayerAdapter.Pl
         try {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             parentRef = database.getReference();
-            databaseReference = parentRef.child("players");
-            databaseReference.keepSynced(true);
+            playerReference = parentRef.child("players");
+            userReference = parentRef.child("users");
+            playerReference.keepSynced(true);
+            userReference.keepSynced(true);
         } catch (Exception ex) {
-            Log.i("Exception : ", " databaseReference " + ex);
+            Log.i("Exception : ", " playerReference " + ex);
         }
 
-        initialize();
+//        initialize();
+        loadFirebaseUser();
     }
 
     private void initialize() {
-        for (int i = 0; i < 7; i++) {
-            Player item = new Player();
-            item.setName(names[i] + "");
-            item.setPoint(points[i] + "");
-            item.setPrice(points[i] + "");
-            item.setDetails(names[i] + "");
-            playerList.add(item);
+        pushRef = userReference.push();
+        pushRef.child("email").setValue("amanullahoasraf@gmail.com");
+        DatabaseReference user = pushRef.child("playerlist");
+        for (int i = 1; i <= 15; i++) {
+//            Player item = new Player();
+//            item.setName(names[i] + "");
+//            item.setPoint(points[i] + "");
+//            item.setPrice(points[i] + "");
+//            item.setDetails(names[i] + "");
+//            playerList.add(item);
 
-
-            pushRef = databaseReference.push();
-            pushRef.setValue(item);
+//            pushRef = playerReference.push();
+            user.child(String.valueOf(i)).setValue("playerId");
         }
     }
 
@@ -139,24 +135,20 @@ public class SearchPlayers extends AppCompatActivity implements PlayerAdapter.Pl
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
-        // listening to search query text change
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // filter recycler view when query submitted
                 mAdapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-                // filter recycler view when text is changed
                 mAdapter.getFilter().filter(query);
                 return false;
             }
@@ -172,10 +164,6 @@ public class SearchPlayers extends AppCompatActivity implements PlayerAdapter.Pl
             return true;
         }
         if (id == R.id.action_about) {
-            final Context context = this;
-//            Intent intent = new Intent(context, DetailActivity.class);
-//            intent.putExtra("roll", "47");
-//            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -183,7 +171,6 @@ public class SearchPlayers extends AppCompatActivity implements PlayerAdapter.Pl
 
     @Override
     public void onBackPressed() {
-        // close search view on back button pressed
         if (!searchView.isIconified()) {
             searchView.setIconified(true);
             return;
@@ -191,21 +178,45 @@ public class SearchPlayers extends AppCompatActivity implements PlayerAdapter.Pl
         super.onBackPressed();
     }
 
-    private void whiteNotificationBar(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int flags = view.getSystemUiVisibility();
-            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            view.setSystemUiVisibility(flags);
-            getWindow().setStatusBarColor(Color.WHITE);
-        }
-    }
-
     @Override
     public void onPlayerSelected(Player player) {
-        final Context context = this;
+//        final Context context = this;
 //        Intent intent = new Intent(context, DetailActivity.class);
 //        intent.putExtra("roll", player.getPhone());
 //        startActivity(intent);
-        //Toast.makeText(getApplicationContext(), "Selected: " + player.getName() + ", " + player.getPhone(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Selected: " + player.getName() + ", " + player.getPrice(), Toast.LENGTH_LONG).show();
+    }
+
+    public void loadFirebaseUser() {
+        playerReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                player=dataSnapshot.getValue(Player.class);
+                Log.e("onChildAdded", "aaddChildEventListener" + player.getName());
+                playerList.add(player);
+                mAdapter.notifyDataSetChanged();
+                Log.e("onChildAdded", "addChildEventListener" + s);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Log.e("onChildChanged", "addChildEventListener" + dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.e("onChildRemoved", "addChildEventListener");
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                Log.e("onChildMoved", "addChildEventListener" + s);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("onCalcnelle", databaseError.toString() + "addChildEventListener");
+            }
+        });
     }
 }
