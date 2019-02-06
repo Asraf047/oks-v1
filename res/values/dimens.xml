@@ -1,0 +1,99 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="activity_margin">16dp</dimen>
+    <dimen name="thumbnail">40dp</dimen>
+    <dimen name="row_padding">10dp</dimen>
+    <dimen name="contact_name">15dp</dimen>
+    <dimen name="contact_number">12dp</dimen>
+    <dimen name="base_padding">16dp</dimen>
+    <dimen name="fab_size">56dp</dimen>
+    <dimen name="activity_horizontal_margin2">5dp</dimen>
+    <dimen name="activity_vertical_margin2">16dp</dimen>
+    <dimen name="app_bar_height">300dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="layout_height">75dp</dimen>
+    <dimen name="layout_height2">150dp</dimen>
+    <dimen name="layout_margin">5dp</dimen>
+    <dimen name="icon_size">24dp</dimen>
+    <dimen name="layout_marginLeft">0dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="recycler_view_padding">17dp</dimen>
+    <dimen name="tab_max_width">264dp</dimen>
+    <dimen name="tab_padding_bottom">16dp</dimen>
+    <dimen name="tab_label">14sp</dimen>
+    <dimen name="custom_tab_layout_height">72dp</dimen>
+
+    <dimen name="font_title">26sp</dimen>
+    <dimen name="font_larger">22sp</dimen>
+    <dimen name="font_large">18sp</dimen>
+    <dimen name="font_normal">16sp</dimen>
+    <dimen name="font_medium">14sp</dimen>
+    <dimen name="font_small">12sp</dimen>
+
+    <dimen name="space_tiny">4dp</dimen>
+    <dimen name="space_small">8dp</dimen>
+    <dimen name="space_normal">16dp</dimen>
+    <dimen name="space_medium">24dp</dimen>
+    <dimen name="space_large">32dp</dimen>
+    <dimen name="space_xlarge">48dp</dimen>
+    <dimen name="space_huge">64dp</dimen>
+
+    <dimen name="margin_tiny">@dimen/space_tiny</dimen>
+    <dimen name="margin_small">@dimen/space_small</dimen>
+    <dimen name="margin_normal">@dimen/space_normal</dimen>
+    <dimen name="margin_large">@dimen/space_large</dimen>
+    <dimen name="margin_medium">@dimen/space_medium</dimen>
+
+    <dimen name="padding_tiny">@dimen/space_tiny</dimen>
+    <dimen name="padding_small">@dimen/space_small</dimen>
+    <dimen name="padding_normal">@dimen/space_normal</dimen>
+    <dimen name="padding_medium">@dimen/space_medium</dimen>
+    <dimen name="padding_large">@dimen/space_large</dimen>
+
+    <dimen name="fab_translateY">100dp</dimen>
+    <dimen name="fab_elevation">@dimen/space_tiny</dimen>
+
+    <dimen name="card_elevation">@dimen/space_tiny</dimen>
+    <dimen name="toolbar_elevation">@dimen/space_tiny</dimen>
+    <dimen name="card_corner_radius">@dimen/space_small</dimen>
+
+    <dimen name="icon_size2">56dp</dimen>
+    <dimen name="toolbar_icon_size">@dimen/space_medium</dimen>
+
+    <dimen name="logo_w_h">100dp</dimen>
+
+    <dimen name="icon_top_margin">24dp</dimen>
+    <dimen name="icon_bottom_margin">24dp</dimen>
+    <dimen name="title_bottom_margin">16dp</dimen>
+    <dimen name="field_width_standard">160dp</dimen>
+
+
+    <dimen name="details_toolbar_container_height">156dp</dimen>
+    <dimen name="details_card_height">146dp</dimen>
+
+    <dimen name="login_button_radius">30dp</dimen>
+    <dimen name="login_button_height">60dp</dimen>
+    <dimen name="login_button_width">300dp</dimen>
+    <dimen name="login_holder_height">25dp</dimen>
+    <dimen name="login_horizontalline_spacing">10dp</dimen>
+
+
+    <!--<dimen name="nav_header_vertical_spacing">20dp</dimen>-->
+    <!--<dimen name="nav_header_height">180dp</dimen>-->
+    <dimen name="toolbar_text_size">20sp</dimen>
+    <dimen name="toolbar_text_size2">15sp</dimen>
+
+    <!--<dimen name="activity_margin">16dp</dimen>-->
+
+    <!--<dimen name="thumbnail">40dp</dimen>-->
+    <!--<dimen name="row_padding">10dp</dimen>-->
+    <!--<dimen name="contact_name">15dp</dimen>-->
+    <!--<dimen name="contact_number">12dp</dimen>-->
+    <!--<dimen name="base_padding">16dp</dimen>-->
+    
+</resources>
